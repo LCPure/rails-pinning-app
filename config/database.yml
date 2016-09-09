@@ -8,15 +8,19 @@ default: &default
   # If you're on a Mac and installed postgres via homebrew, you can simply
   # delete the following two lines.
   username: postgres
-  password: 123456
+  password: shoprite
 
 development:
   <<: *default
   database: coder-pinterest_development
+  username: postgres
+  password: shoprite
 
 test:
   <<: *default
   database: coder-pinterest_test
+  username: postgres
+  password: shoprite
 
 production:
   url: <%= ENV['DATABASE_URL'] %>

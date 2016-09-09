@@ -46,3 +46,5 @@ end
 
 gem 'rspec'
 gem 'rspec-rails'
+gem 'tzinfo-data'
+gem 'rails_12factor'

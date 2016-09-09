@@ -1,0 +1,1 @@
+web: bundle exec puma -t ${PORT:-3000} -e ${RACK_ENV:-development}
