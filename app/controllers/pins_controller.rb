@@ -29,9 +29,10 @@ class PinsController < ApplicationController
 	  @errors = @pin.errors
 	  render :new
 	end
-    
+   end	
+	
   
-  end
+  
  
  
  private
