@@ -114,7 +114,7 @@ RSpec.describe PinsController do
         url: "http://railswizard.org", 
         slug: "rails-wizard", 
         text: "A fun and helpful Rails Resource",
-        category_id: 1}    
+        category_id: 2}    
     end
     
     after(:each) do
@@ -143,7 +143,7 @@ RSpec.describe PinsController do
       # The title is required in the Pin model, so we'll
       # delete the title from the @pin_hash in order
       # to test what happens with invalid parameters
-      @pin_hash.delete(:title)
+      @pin_hash[:title] = ""
       post :update, id: @pin.id, pin: @pin_hash
       expect(response).to render_template(:edit)
     end
@@ -152,7 +152,7 @@ RSpec.describe PinsController do
       # The title is required in the Pin model, so we'll
       # delete the title from the @pin_hash in order
       # to test what happens with invalid parameters
-      @pin_hash.delete(:title)
+      @pin_hash[:title] = ""
       post :update, id: @pin.id, pin: @pin_hash
       expect(assigns[:errors].present?).to be(true)
     end    
