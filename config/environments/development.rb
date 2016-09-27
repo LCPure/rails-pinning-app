@@ -38,4 +38,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  
+  Paperclip.options[:command_path] = "C:/Program Files/ImageMagick-7.0.3-Q16/convert"
+  #Added link to Covert Utility
 end
