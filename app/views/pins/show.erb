@@ -5,6 +5,12 @@
   </h1>
 </div>
 
+<br>
+<br>
+<% if !@pin.image.url.nil? %>
+  <img src="<%= @pin.image.url(:medium) %>">
+  <% end %>
+
 <div class="show-pin">
   <p><%= "#{@pin.text}" %></p>
 
@@ -21,11 +27,8 @@
   Back to Home
 </a>
 
-<br>
-<br>
 
- <% if !@pin.image.url.nil? %>
-  <img src="<%= @pin.image.url(:medium) %>">
-  <% end %>
+
+ 
 
 
