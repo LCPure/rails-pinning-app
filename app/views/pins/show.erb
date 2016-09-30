@@ -24,7 +24,8 @@
 <br>
 <br>
 
-<% if @pin.image.url.nil? %>
+ <% if !@pin.image.url.nil? %>
   <img src="<%= @pin.image.url(:medium) %>">
+  <% end %>
 
-<% end %>
+
