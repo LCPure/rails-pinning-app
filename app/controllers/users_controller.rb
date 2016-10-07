@@ -60,6 +60,23 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def login
+  
+  
+  end
+  
+  def authenticate
+  
+     user = User.authenticate(params[:email], params[:password])
+	 if !@user.nil?
+	    redirect_to user_path(@user)
+	 else
+	    @errors = "Your email or password is not in the system. Make sure correct and try again"
+		render login
+	 end
+  
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
