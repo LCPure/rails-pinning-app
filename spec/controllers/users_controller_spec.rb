@@ -176,12 +176,12 @@ describe "POST login" do
  
   it "renders the show view if params valid" do
     post :authenticate, @valid_user_hash
-    expect(response).to render_template("show")
+    expect(response).to redirect_to(user_path(@user))
   end
  
   it "populates @user if params valid" do 
     post :authenticate, @valid_user_hash
-    expect(assigns[:user]).to eq(@user)
+    expect(@user.present?).to be(true)
   end
  
   it "renders the login view if params invalid" do
