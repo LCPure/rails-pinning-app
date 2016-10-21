@@ -23,12 +23,30 @@ RSpec.describe UsersController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # User. As you add validations to User, be sure to
   # adjust the attributes here as well.
+  
+  before(:each) do
+    @user = FactoryGirl.build(:user)
+  end
+  after(:each) do
+    @user.destroy
+  end
+	
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+	 first_name: @user.first_name,
+	 last_name: @user.last_name,
+	 email: @user.email,
+	 password: @user.password
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+	 first_name: @user.first_name,
+	 last_name: nil,
+	 email: "",
+	 password: @user.password
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -162,17 +180,17 @@ RSpec.describe UsersController, type: :controller do
 end
  
 describe "POST login" do
-  before(:all) do
-    @user = User.create(email: "coder@skillcrush.com", password: "secret")
-    @valid_user_hash = {email: @user.email, password: @user.password}
-    @invalid_user_hash = {email: "", password: ""}
-  end
+  #before(:all) do
+    #@user = User.create(first_name: "Jerome", last_name: "superhack", email: "coder@skillcrush.com", password: "secret")
+    #@valid_user_hash = {first_name: @user.first_name, last_name: @user.last_name, email: @user.email, password: @user.password}
+    #@invalid_user_hash = {first_name: "", last_name: "", email: "", password: ""}
+  #end
  
-  after(:all) do
-    if !@user.destroyed?
-      @user.destroy
-    end
-  end
+  #after(:all) do
+    #if !@user.destroyed?
+      #@user.destroy
+    #end
+  #end
  
   it "renders the show view if params valid" do
     post :authenticate, @valid_user_hash
