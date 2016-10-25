@@ -121,14 +121,19 @@ RSpec.describe UsersController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+	 first_name: @user.first_name,
+	 last_name: @user.last_name,
+	 email: @user.email,
+	 password: @user.password
+    }
       }
 
       it "updates the requested user" do
         user = User.create! valid_attributes
         put :update, id: user.to_param, user: new_attributes, session: valid_session
         user.reload
-        skip("Add assertions for updated state")
+        expect(assigns(:user)).to eq(user)
       end
 
       it "assigns the requested user as @user" do
@@ -180,35 +185,41 @@ RSpec.describe UsersController, type: :controller do
 end
  
 describe "POST login" do
-  before(:all) do
-    @user = User.create(first_name: "Jerome", last_name: "superhack", email: "coder@skillcrush.com", password: "secret")
-    @valid_user_hash = {first_name: @user.first_name, last_name: @user.last_name, email: @user.email, password: @user.password}
-    @invalid_user_hash = {first_name: "", last_name: "", email: "", password: ""}
-  end
+  #before(:all) do
+    #@user = User.create(first_name: "Jerome", last_name: "superhack", email: "coder@skillcrush.com", password: "secret")
+    #@valid_user_hash = {first_name: @user.first_name, last_name: @user.last_name, email: @user.email, password: @user.password}
+   # @invalid_user_hash = {first_name: "", last_name: "", email: "", password: ""}
+  #end
  
-  after(:all) do
-    if !@user.destroyed?
-      @user.destroy
-    end
-  end
+  #after(:all) do
+    #if !@user.destroyed?
+      #@user.destroy
+    #end
+  #end
  
   it "renders the show view if params valid" do
-    post :authenticate, @valid_user_hash
-    expect(response).to redirect_to(user)
+    user = User.create! valid_attributes
+	post :authenticate, {email: user.email, password: user.password}
+    #post :authenticate, @valid_user_hash
+    expect(response).to redirect_to(user_path(user.id))
   end
  
   it "populates @user if params valid" do 
-    post :authenticate, @valid_user_hash
+    #post :authenticate, @valid_user_hash
+	user = User.create! valid_attributes
+	post :authenticate, {email: user.email, password: user.password}
     expect(@user.present?).to be(true)
   end
  
   it "renders the login view if params invalid" do
-    post :authenticate, @invalid_user_hash
+    user = User.create! valid_attributes
+    post :authenticate, invalid_attributes
     expect(response).to render_template("login")   
   end
  
   it "populates the @errors variable if params invalid" do
-    post :authenticate, @invalid_user_hash 
+    user = User.create! valid_attributes
+    post :authenticate, invalid_attributes
     expect(assigns[:errors].present?).to be(true)
   end
 end
