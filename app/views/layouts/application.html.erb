@@ -7,7 +7,15 @@
   <%= javascript_include_tag 'default', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body
+ <% if !session[:user_id].nil? %>
+  <div class="pull-left">
+    <h3>
+	    <%= "Hi, #{current_user.first_name}!" %> |
+		<%= link_to "Logout", logout_path(current_user), method: :delete %>
+	</h3>
+  </div>
+ <% end %>
   <div class="container">
     <%= yield %>
   </div>

@@ -66,10 +66,20 @@ class UsersController < ApplicationController
   
   end
   
+  def logout
+    session.delete(:user_id)
+  end
+  
+  def current_user
+     @user ||= User.where("id=?", session[:user_id]).first
+  end
+  helper_method :current_user
+  
   def authenticate
   
      user = User.authenticate(params[:email], params[:password])
 	 if !user.nil?
+	    session[:user_id] = user.id
 	    redirect_to user_path(user[:id])
 	 else
 	    @errors = "Your email or password is not in the system. Make sure they are correct and try again"
