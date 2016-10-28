@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  #before_action :set_user, only: [:show, :edit, :update, :destroy]
+  
+  before_action :require_login, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
@@ -66,15 +68,16 @@ class UsersController < ApplicationController
   
   end
   
-  def logout
-    session.delete(:user_id)
-  end
-  
   def current_user
      @user ||= User.where("id=?", session[:user_id]).first
   end
   helper_method :current_user
   
+  def logout
+    session.delete(:user_id)
+	redirect_to login_path
+  end
+     
   def authenticate
   
      user = User.authenticate(params[:email], params[:password])
@@ -98,4 +101,11 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :password)
     end
+	
+	def require_login
+	  if current_user.nil?
+	    redirect_to :login
+	  end
+	
+	end
 end
