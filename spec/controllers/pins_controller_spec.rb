@@ -1,6 +1,17 @@
 require 'spec_helper'
 RSpec.describe PinsController do
 
+    before(:each) do
+	  @user = FactoryGirl.create(:user)
+	   login(@user)
+    end
+	
+	after(:each) do
+	  if !@user.destroyed?
+	    @user.destroy
+	  end
+	end
+
    describe "GET index" do
    
      it 'renders the index template' do
@@ -10,7 +21,7 @@ RSpec.describe PinsController do
 	 
 	 it 'populates @pins with all pins' do
 	    get :index
-		expect(assigns[:pins]).to eq(Pin.all)
+		expect(assigns[:pins]).to eq(@user.pins.all)
 	 end
    
    end
