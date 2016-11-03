@@ -7,7 +7,7 @@ class PinsController < ApplicationController
   end
   
   def index
-    @pins = current_user.pins.all
+    @pins = Pin.all
   end
   
   def show
@@ -49,7 +49,11 @@ class PinsController < ApplicationController
    
    end
 	
-  
+  def repin
+    @pin =Pin.find(params[:id])
+	@pin.pinnings.create(user: current_user)
+	redirect_to user_path(current_user)
+  end
   
  
  
