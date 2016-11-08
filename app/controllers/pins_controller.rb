@@ -3,7 +3,7 @@ class PinsController < ApplicationController
   
   def show_by_name
     @pin = Pin.find_by_slug(params[:slug])
-	@user = @pin.users
+	@users = @pin.users
 	render :show
   end
   
@@ -13,7 +13,7 @@ class PinsController < ApplicationController
   
   def show
     @pin = Pin.find(params[:id])
-	@user = @pin.users
+	@users = @pin.users
 	
   end
   

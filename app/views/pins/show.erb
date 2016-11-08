@@ -30,7 +30,7 @@
     <%= link_to "#{@pin.url}", "#{@pin.url}", html_options = {target: "_blank", class: "url"} %>
      
   </p>
-  <%= link_to repin_path(pin), class: "btn btn-primary", 
+  <%= link_to repin_path(@pin), class: "btn btn-primary", 
             method: "post" do %>
             <i class="fa fa-map-pin"></i>
             Repin!
