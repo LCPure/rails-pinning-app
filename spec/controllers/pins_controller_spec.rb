@@ -3,12 +3,19 @@ RSpec.describe PinsController do
 
     before(:each) do
 	  @user = FactoryGirl.create(:user)
+	  @category = FactoryGirl.create(:category)
 	   login(@user)
     end
 	
 	after(:each) do
 	  if !@user.destroyed?
 	    @user.destroy
+		@user.pinnings.destroy
+	  end
+	  
+	category = Category.find_by_name("rails")
+	  if !category.nil?
+	     category.destroy
 	  end
 	end
 
@@ -21,7 +28,7 @@ RSpec.describe PinsController do
 	 
 	 it 'populates @pins with all pins' do
 	    get :index
-		expect(assigns[:pins]).to eq(@user.pins.all)
+		expect(assigns[:pins]).to eq(pins.all)
 	 end
    
    end
