@@ -10,7 +10,7 @@ RSpec.describe PinsController do
 	after(:each) do
 	  if !@user.destroyed?
 	    @user.destroy
-		@user.pinnings.destroy
+		@user.pinnings.destroy_all
 	  end
 	  
 	category = Category.find_by_name("rails")
@@ -28,7 +28,7 @@ RSpec.describe PinsController do
 	 
 	 it 'populates @pins with all pins' do
 	    get :index
-		expect(assigns[:pins]).to eq(pins.all)
+		expect(assigns[:pins]).to eq(Pin.all)
 	 end
    
    end
@@ -174,6 +174,40 @@ RSpec.describe PinsController do
       post :update, id: @pin.id, pin: @pin_hash
       expect(assigns[:errors].present?).to be(true)
     end    
+    
+  end
+  
+  describe "Post repin" do
+    before(:each) do
+	  @user = FactoryGirl.create(:user)
+	  login(@user)
+	  @pin = FactoryGirl.create(:pin)
+	end
+	
+	after(:each) do
+	  pin = Pin.find_by_slug("rails-wizard")
+	  if !pin.nil?
+	     pin.destroy
+	  end
+	  logout(@user)
+	end
+	
+	it 'responds with a redirect' do
+	   post :repin, id: @pin.id, pin: {pinning:{user_id: @user_id}}
+	   expect(response.redirect?).to be (true)
+	end
+	
+	it 'creates a user.pin' do
+	  post :repin, id: @pin.id, pin: {pinning:{user_id: @user_id}}
+	  expect(assigns(:pin)).to eq(@pin)
+	end
+	
+	it 'redirects to the user show page' do
+	  post :repin, id: @pin.id, pin: {pinning:{user_id: @user_id}}
+	  expect(response).to redirect_to (user_path(@user))
+	
+	end
+	
     
   end
   
