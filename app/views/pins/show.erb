@@ -15,6 +15,7 @@
 <% end %>
 
 <br>
+   <%= render partial: "shared/repin_form", locals: {pin: @pin} %> 
 <br>
 
 <% if !@pin.image.url.nil? %>

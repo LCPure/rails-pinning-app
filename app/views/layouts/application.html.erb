@@ -3,20 +3,49 @@
 <head>
   <title>Coder Pinterest</title>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <%= stylesheet_link_tag  'defaults', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body
- <% if !session[:user_id].nil? %>
-  <div class="pull-left">
-    <h3>
-	    <%= "Hi, #{current_user.first_name}!" %> |
-		<%= link_to "Logout", logout_path(current_user), method: "delete" %>
-	</h3>
-  </div>
- <% end %>
+<body>
   <div class="container">
+   <% if logged_in? %>
+    <div class="pull-right dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" 
+		id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+        <%= "Hi, #{current_user.first_name}!" %>
+		<span class="caret"></span>
+        </button>
+ 
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+		  <% current_user.boards.each do |board| %>
+            <li role="presentation">
+          <a role="menuitem" tabindex="-1" href="board_path(board_id)">
+            <%= "#{board.name}" %>
+          </a>
+        </li>
+      <% end %>
+         <li role="presentation" class="divider"></li>
+      <li role="presentation">
+        <%= link_to "Add a Pin", new_pin_path, "role" => "menuitem", "tabindex" => "-1" %>
+      </li>        
+      <li role="presentation">
+        <%= link_to "Add a Board", new_board_path, "role" => "menuitem", "tabindex" => "-1" %>
+      </li>        
+      <li role="presentation" class="divider"></li>
+      <li role="presentation">
+        <%= link_to "Home", root_path, "role" => "menuitem", "tabindex" => "-1" %>
+      </li>                
+      <li role="presentation">
+        <%= link_to "Logout", logout_path(current_user), :method => :delete, "role" => "menuitem", "tabindex" => "-1" %>
+      </li>        
+    </ul>
+ 
+  </div>
+<% end %>
+ 
+   
+  
     <%= yield %>
   </div>
 </body>
