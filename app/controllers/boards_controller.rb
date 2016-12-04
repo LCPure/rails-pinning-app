@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
-  before_action :set_board, only: [:show, :edit, :update, :destroy]
-  before_action :require_login, only: [:show, :edit, :update, :destroy, :index]
+  #before_action :set_board, only: [:show, :edit, :update, :destroy]
+  before_action :require_login, only: [:create, :edit, :update, :destroy, :new]
 
   # GET /boards
   # GET /boards.json
@@ -11,6 +11,7 @@ class BoardsController < ApplicationController
   # GET /boards/1
   # GET /boards/1.json
   def show
+   @board = Board.find(params[:id])
    @pins = @board.pins
   end
 

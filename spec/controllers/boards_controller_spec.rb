@@ -2,14 +2,18 @@ require 'spec_helper'
 RSpec.describe BoardsController do
   before(:each) do
 	  @user = FactoryGirl.create(:user)
+	  @board = @user.boards.first
 	  @category = FactoryGirl.create(:category)
 	   login(@user)
     end
 	
 	after(:each) do
 	  if !@user.destroyed?
+	    @user.pinnings.destroy_all
+		@user.boards.destroy_all
 	    @user.destroy
-		@user.pinnings.destroy_all
+		
+		
 	end
 	
    end
@@ -33,7 +37,7 @@ RSpec.describe BoardsController do
   it 'redirects to the login page if user is not logged in' do
      	logout(@user)
 		get :new
-		expect(response).to redirect_to(login_path)
+		expect(response).to redirect_to(:login)
   end    
 end  
 
@@ -80,6 +84,19 @@ describe "POST create" do
      logout(@user)
 	 post :create, board: @board_hash
 	 expect(response).to redirect_to(:login) 
+  end 
+end
+
+ describe "GET #show" do
+  it "assigns the requested board" do
+      
+      get :show, id: @board.id
+      expect(assigns(:board)).to eq(@board)
+  end
+ 
+  it "assigns the @pins variable with the board's pins" do
+     get :show, id: @board.id
+	 expect(assigns(:pins)).to eq(@board.pins)
   end 
 end
  end
