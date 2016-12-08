@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :followers
+
   resources :boards
 
   get 'signup' => "users#new", as: :signup
