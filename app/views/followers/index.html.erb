@@ -5,20 +5,20 @@
 <table>
   <thead>
     <tr>
-      <th>User</th>
       <th>Follower</th>
-      <th colspan="3"></th>
+      <th>Boards</th>
+      <th colspan="8"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @followers.each do |follower| %>
+    <% @followed.each do |follower| %>
       <tr>
-        <td><%= follower.user %></td>
-        <td><%= follower.follower_id %></td>
-        <td><%= link_to 'Show', follower %></td>
-        <td><%= link_to 'Edit', edit_follower_path(follower) %></td>
+        <td><%= follower.last_name %></td>
+		<%= follower.boards.each do |board| %>
+		<td><%= board.name %></td>
         <td><%= link_to 'Destroy', follower, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		<% end %>
       </tr>
     <% end %>
   </tbody>
