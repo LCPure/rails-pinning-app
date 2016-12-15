@@ -1,29 +1,53 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Followers</h1>
+<h1> Followers</h1>
 
-<table>
+<div class="table-responsive">
+<table class="table table-bordered table-inverse ">
   <thead>
     <tr>
-      <th>Follower</th>
+      <th>Followering</th>
       <th>Boards</th>
       <th colspan="8"></th>
     </tr>
   </thead>
 
   <tbody>
+    
     <% @followed.each do |follower| %>
       <tr>
-        <td><%= follower.last_name %></td>
-		<%= follower.boards.each do |board| %>
+        <td><%= follower.full_name %></td>
+		<% follower.boards.each do |board| %>
 		<td><%= board.name %></td>
-        <td><%= link_to 'Destroy', follower, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-		<% end %>
+       <% end %>
       </tr>
     <% end %>
   </tbody>
-</table>
+ </table>
+ </div>
 
 <br>
+
+<div class="table-responsive">
+<table class="table table-bordered table-inverse ">
+  <thead>
+    <tr>
+      <th>Pinnable Boards</th>
+      <th colspan="8"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+   <% if !current_user.pinnable_boards.nil? %>
+    <% current_user.pinnable_boards.each do |pinnable_boards| %>
+      <tr>
+        <td><%= pinnable_boards.name %></td>
+	  </tr>
+    <% end %>
+	<% end %>
+  </tbody>
+ </table>
+ </div>
+
 
 <%= link_to 'New Follower', new_follower_path %>
