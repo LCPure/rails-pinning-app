@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1> Followers</h1>
+<h1> Followering and Pinnable</h1>
 
 <div class="table-responsive">
 <table class="table table-bordered table-inverse ">
@@ -28,26 +28,6 @@
 
 <br>
 
-<div class="table-responsive">
-<table class="table table-bordered table-inverse ">
-  <thead>
-    <tr>
-      <th>Pinnable Boards</th>
-      <th colspan="8"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-   <% if !current_user.pinnable_boards.nil? %>
-    <% current_user.pinnable_boards.each do |pinnable_boards| %>
-      <tr>
-        <td><%= pinnable_boards.name %></td>
-	  </tr>
-    <% end %>
-	<% end %>
-  </tbody>
- </table>
- </div>
 
 
 <%= link_to 'New Follower', new_follower_path %>

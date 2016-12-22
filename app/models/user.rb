@@ -3,9 +3,10 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   has_secure_password
   has_many :pinnings, dependent: :destroy
-  has_many :pins, through: :pinnings, dependent: :destroy
+  has_many :pins, through: :pinnings
   has_many :boards
-  has_many :board_pinners
+  has_many :board_pinners, dependent: :destroy
+  has_many :followers, dependent: :destroy
 
   def self.authenticate(email, password)
      	 

@@ -3,7 +3,7 @@ class Pin < ActiveRecord::Base
   validates_uniqueness_of :slug
   belongs_to :category
   belongs_to :user
-  has_many :pinnings
+  has_many :pinnings, dependent: :destroy
   has_many :users, through: :pinnings
   accepts_nested_attributes_for :pinnings
   has_attached_file :image, styles: { medium: "300x300>",
